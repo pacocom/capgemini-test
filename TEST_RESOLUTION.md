@@ -1,5 +1,13 @@
 # Test Resolution
 
+## Step 3: Fix the DNI client dependency
+
+**Problem:** `mvn compile` failed because `DniClient` uses `OkHttpClient`, but the `feign-okhttp` dependency was missing
+(`package feign.okhttp does not exist`).
+
+**Solution:** I added `io.github.openfeign:feign-okhttp` to `pom.xml`. Spring Cloud manages its version. The existing
+DNI client configuration remains unchanged. `mvn compile` result is `BUILD SUCCESS`.
+
 ## Step 2: Use modern Docker Compose
 
 **Problem:**

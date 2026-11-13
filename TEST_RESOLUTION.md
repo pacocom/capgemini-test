@@ -1,5 +1,20 @@
 # Test Resolution
 
+## Step 8: Add reproducible load tests
+
+**Solution:** I added `tests/load/users.js` using `grafana/k6:2.4.0`. I tested reads
+and creation with up to 10 virtual users, unique creation data and checks of the
+saved users. All checks passed without HTTP errors; read p95 was 4.73 ms and
+creation p95 was 13.41 ms. I saved the baseline in `tests/load/results.json`.
+
+**Million-read test:** I completed 1,000,000 reads in 62.99 seconds with 50 virtual
+users, zero errors and a p95 of 5.88 ms. I saved the results in
+`tests/load/million-results.json`.
+
+**Scope:** I tested cumulative reads of the same user locally, with per-query
+logging disabled. This does not demonstrate one million simultaneous requests
+or equivalent creation capacity.
+
 ## Step 7: Check acceptance scenarios and README coverage
 
 **Goal:** I checked the implemented behavior against the README and added acceptance tests without extending the

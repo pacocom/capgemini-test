@@ -1,0 +1,186 @@
+{
+  "date": "2026-11-13",
+  "timezone": "Europe/Madrid",
+  "environment": {
+    "cpu": "AMD Ryzen 7 PRO 8840HS",
+    "physical_cores": 8,
+    "logical_cpus": 16,
+    "ram_mib": 27703,
+    "java": "17.0.21",
+    "k6_image": "grafana/k6:2.4.0",
+    "target": "local executable JAR on port 18080",
+    "external_services": "local MockServer, not real providers",
+    "shared_host": true
+  },
+  "profile": {
+    "stages": [
+      {
+        "seconds": 5,
+        "target_vus": 1
+      },
+      {
+        "seconds": 10,
+        "target_vus": 5
+      },
+      {
+        "seconds": 10,
+        "target_vus": 10
+      },
+      {
+        "seconds": 5,
+        "target_vus": 0
+      }
+    ],
+    "sleep_seconds_per_iteration": 0.1,
+    "model": "closed workload; not a maximum-capacity or million-request test"
+  },
+  "runs": {
+    "read": {
+      "duration_ms": 30255.352057,
+      "requests_including_setup": {
+        "count": 1239,
+        "rate": 40.95143225125156
+      },
+      "failed_requests": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 1239
+      },
+      "checks": {
+        "rate": 1,
+        "passes": 1238,
+        "fails": 0
+      },
+      "read_requests": {
+        "count": 1238,
+        "rate": 40.918380247820366
+      },
+      "read_latency_ms": {
+        "p(90)": 4.2018948,
+        "p(95)": 4.732628699999999,
+        "avg": 2.6427802641357006,
+        "min": 0.798667,
+        "med": 2.159536,
+        "max": 17.294441
+      },
+      "thresholds": {
+        "http_req_failed": {
+          "rate<0.01": {
+            "ok": true
+          }
+        },
+        "checks": {
+          "rate==1": {
+            "ok": true
+          }
+        },
+        "http_req_duration{endpoint:read}": {
+          "p(95)<500": {
+            "ok": true
+          }
+        },
+        "http_reqs{endpoint:read}": {
+          "count>0": {
+            "ok": true
+          }
+        }
+      }
+    },
+    "create": {
+      "duration_ms": 30079.346412,
+      "requests_including_setup": {
+        "rate": 77.16258086891307,
+        "count": 2321
+      },
+      "failed_requests": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 2321
+      },
+      "checks": {
+        "rate": 1,
+        "passes": 2320,
+        "fails": 0
+      },
+      "read_requests": {
+        "count": 1160,
+        "rate": 38.564667732847546
+      },
+      "read_latency_ms": {
+        "avg": 1.2362320068965509,
+        "min": 0.504793,
+        "med": 1.2354425,
+        "max": 2.604868,
+        "p(90)": 1.599829,
+        "p(95)": 1.7090266999999997
+      },
+      "thresholds": {
+        "http_req_duration{endpoint:read}": {
+          "p(95)<500": {
+            "ok": true
+          }
+        },
+        "http_req_duration{endpoint:create}": {
+          "p(95)<1000": {
+            "ok": true
+          }
+        },
+        "http_req_failed": {
+          "rate<0.01": {
+            "ok": true
+          }
+        },
+        "checks": {
+          "rate==1": {
+            "ok": true
+          }
+        },
+        "http_reqs{endpoint:create}": {
+          "count>0": {
+            "ok": true
+          }
+        },
+        "http_reqs{endpoint:read}": {
+          "count>0": {
+            "ok": true
+          }
+        }
+      },
+      "create_requests": {
+        "count": 1160,
+        "rate": 38.564667732847546
+      },
+      "create_latency_ms": {
+        "p(90)": 12.0658045,
+        "p(95)": 13.40590615,
+        "avg": 8.16292764482759,
+        "min": 4.472043,
+        "med": 6.834013000000001,
+        "max": 158.408086
+      }
+    }
+  },
+  "resource_samples": {
+    "note": "Point-in-time samples, not peaks. Java CPU is the process lifetime average.",
+    "read": {
+      "java_rss_kib": 458420,
+      "java_lifetime_cpu_percent": 48.1,
+      "postgres_cpu_percent": 0.4,
+      "postgres_memory_mib": 50.7,
+      "mockserver_cpu_percent": 0.28,
+      "mockserver_memory_mib": 240.5
+    },
+    "create": {
+      "java_rss_kib": 513388,
+      "java_lifetime_cpu_percent": 37.9,
+      "postgres_cpu_percent": 4.3,
+      "postgres_memory_mib": 55.41,
+      "mockserver_cpu_percent": 20.55,
+      "mockserver_memory_mib": 631
+    }
+  },
+  "persisted_load_users": {
+    "admin": 583,
+    "superadmin": 577
+  }
+}

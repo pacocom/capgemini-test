@@ -1,5 +1,27 @@
 # Test Resolution
 
+## Step 5: Retrieve a user from room 1
+
+**Goal:** I implemented the README's user lookup before adding user creation.
+
+**Solution:** I mapped the existing `users` table with JPA, added a Spring Data repository and exposed
+`GET /users/{id}`. I filter by both user ID and room 1 in the database. I return a response DTO with `id`, `name`,
+`email`, `phone`, `rol`, `dni` and `roomId`, without exposing the JPA entity directly.
+
+I return `200` for a user in room 1, `404` for a missing user or a user in another room, and `400` for a nonnumeric ID.
+I chose these lookup statuses because the README does not specify them.
+
+**Room scope:** I follow the README and currently restrict lookup to room 1. I will also create users in room 1 when I
+implement creation. To support creating and retrieving users in other rooms, I will need to extend the API to accept a
+room selection and validate it. In that future extension, I will use room 1 by default when no room is specified. I have
+not implemented room selection yet.
+
+**Quality and scalability:** I use the primary-key lookup instead of loading all users, reuse Spring Data JPA and keep
+the HTTP response separate from persistence. I added integration tests through HTTP request handling and the real
+PostgreSQL database for success, another room, a missing user and an invalid ID. I will add creation, validation, DNI
+checks and notifications in later steps. I have not measured high-load capacity or claimed support for millions of
+requests.
+
 ## Step 4: Fix initial data and align the database with the requirements
 
 **Problem:** original users lacked mandatory DNI and phone values, their names exceeded 6 characters and their roles

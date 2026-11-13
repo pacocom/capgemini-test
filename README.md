@@ -23,7 +23,7 @@ Asegúrese de tener instalados los siguientes componentes antes de ejecutar el p
    
 3. Levante los contenedores con Docker Compose:
    bash
-   docker-compose up
+   docker compose up
    
 
 ### Contenedores del Docker

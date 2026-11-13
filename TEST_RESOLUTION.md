@@ -1,5 +1,26 @@
 # Test Resolution
 
+## Step 6: Create a user in room 1
+
+**Solution:** I added `POST /users`. I validate the request, check duplicate email, DNI and phone values, call
+`PATCH /check-dni`, save the user in room 1 and send `usuario guardado` through `/email` for `admin` or `/sms` for
+`superadmin`. I return `201` with the generated `id`, or `409` with `code` and `message`.
+
+I enforce the 6-character name limit, an email containing `@` and a dot, and the roles `admin` and `superadmin`. I also
+require the mandatory fields and respect the existing database column lengths and uniqueness constraints. I use
+`userName` in name validation errors, as specified by the README. For role and phone errors, I use `rol` and `phone`;
+the README does not specify their error labels.
+
+I use a service for the creation flow, Bean Validation for the input and a transaction to roll back the user if a
+notification fails. I keep the database uniqueness checks as protection against concurrent inserts and set timeouts on
+external calls. I keep the response contract at `201` / `409`, without adding a separate HTTP status for external
+failures. DNI, email and SMS failures map to `error validation dni`, `error validation email` and
+`error validation phone`.
+
+**Note:** notification delivery is synchronous and is not atomic with the final database commit. I would need an outbox
+and persistent retries for guaranteed delivery at scale. I have not implemented that extension or load-tested capacity.
+I still use room 1; selecting another room remains a future extension.
+
 ## Step 5: Retrieve a user from room 1
 
 **Goal:** I implemented the README's user lookup before adding user creation.

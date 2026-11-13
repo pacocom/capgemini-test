@@ -27,4 +27,13 @@ public class User {
 
   @Column(name = "room_id")
   private Long roomId;
+
+  public User(CreateUserRequest request) {
+    this.name = request.name();
+    this.email = request.email();
+    this.dni = request.dni();
+    this.phone = request.phone();
+    this.role = request.rol();
+    this.roomId = 1L;
+  }
 }

@@ -1,4 +1,11 @@
 spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 2000
+            readTimeout: 5000
   datasource:
     url: jdbc:postgresql://localhost:5432/users
     username: user

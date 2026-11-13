@@ -1,5 +1,23 @@
 # Test Resolution
 
+## Step 9: Verify the complete solution
+
+I completed this verification with AI assistance, using automated tests, curl
+requests and database checks. I documented the commands, evidence and known
+limitations in [VERIFICATION_REPORT.md](VERIFICATION_REPORT.md).
+
+**All executed checks passed:**
+
+- 32 automated tests.
+- 90 curl requests and 73 SQL checks.
+- 20 concurrent creation requests: one successful creation, 19 conflicts and one notification.
+- External service failures, timeout handling, rollback and persistence after restart.
+- PostgreSQL constraints.
+- Gradual load tests and **1,000,000 reads without errors in 63.55 seconds**.
+
+I included reproducible verification scripts in [tests/acceptance](tests/acceptance/).
+The million-read result represents cumulative requests, not simultaneous clients.
+
 ## Step 8: Add reproducible load tests
 
 **Solution:** I added `tests/load/users.js` using `grafana/k6:2.4.0`. I tested reads

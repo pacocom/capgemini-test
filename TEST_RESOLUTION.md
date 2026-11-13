@@ -1,5 +1,24 @@
 # Test Resolution
 
+## Step 7: Check acceptance scenarios and README coverage
+
+**Goal:** I checked the implemented behavior against the README and added acceptance tests without extending the
+production API.
+
+**Tests:** I start a real HTTP server on a free port and use PostgreSQL and MockServer. I create and retrieve both
+`admin` and `superadmin` users in room 1, check `201`, the generated ID and saved fields, and verify the DNI request and
+`usuario guardado` notification. I also check that I use only the correct notification channel. I test duplicate email,
+an overlong name and rejected DNI, including the absence of notification for that invalid DNI.
+
+**README coverage:**
+
+- I use unique incremental 64-bit room IDs and one mandatory room per user.
+- I allow multiple users in a room and restrict the current API to room 1.
+- I validate name length, email, roles, duplicates and the external DNI result.
+- I save the user, notify by role and return the generated ID with `201`.
+- I return the required `409` validation error body and support user lookup.
+- I have unit, integration and real-HTTP acceptance tests.
+
 ## Step 6: Create a user in room 1
 
 **Solution:** I added `POST /users`. I validate the request, check duplicate email, DNI and phone values, call

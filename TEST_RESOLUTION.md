@@ -1,5 +1,24 @@
 # Test Resolution
 
+## Step 4: Fix initial data and align the database with the requirements
+
+**Problem:** original users lacked mandatory DNI and phone values, their names exceeded 6 characters and their roles
+were not `admin` or `superadmin`. Room IDs also used 32-bit integers instead of the required long values.
+
+**Solution:**
+
+- In `V1__init.sql`, I added only the missing DNI and phone values. This minimum fix is necessary because Flyway cannot
+  run V2 if V1 fails first.
+- In `V2__init.sql`, I changed sample users to `Juan` / `admin` and `María` / `superadmin`, limited names to 6
+  characters and enforced valid roles.
+- I changed room IDs, their sequence and the users' room reference to 64-bit integers.
+- I required each user to belong to a room and prevented deleting rooms with users.
+- I preserved the existing uniqueness constraints on email, DNI and phone.
+
+The sample emails contain `@` and a dot. Multiple users can share a room. The sample user in room 2 is valid; the future
+creation endpoint will use room 1. I will implement API validation, external DNI checks and notifications in later
+steps. I have deferred the Flyway compatibility warning.
+
 ## Step 3: Fix the DNI client dependency
 
 **Problem:** `mvn compile` failed because `DniClient` uses `OkHttpClient`, but the `feign-okhttp` dependency was missing
